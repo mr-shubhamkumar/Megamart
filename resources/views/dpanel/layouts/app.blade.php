@@ -38,10 +38,8 @@
         <x-dpanel::sidebar.item name="Category" icon="bx-category" url="{{route('dpanel.category.index')}}"
             isActive="{{ request()->segment(2) == 'category' }}" />
 
-        <x-dpanel::sidebar.item name="Products" icon="bx-shopping-bag" url="{{route('dpanel.product.index')}}"
-            isActive="{{ request()->segment(2) == 'Product' }}" />
 
-     
+
 
         <x-dpanel::sidebar.item name="Brands" icon="bx-store-alt" url="{{route('dpanel.brand.index')}}"
             isActive="{{ request()->segment(2) == 'brand' }}" />
@@ -53,6 +51,8 @@
         <x-dpanel::sidebar.item name="Colors" icon="bx-color" url="{{route('dpanel.color.index')}}"
             isActive="{{ request()->segment(2) == 'color' }}" />
 
+        <x-dpanel::sidebar.item name="Products" icon="bx-shopping-bag" url="{{route('dpanel.product.index')}}"
+            isActive="{{ request()->segment(2) == 'Product' }}" />
 
     </x-dpanel::sidebar.container>
 

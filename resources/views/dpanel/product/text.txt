@@ -1,0 +1,11 @@
+
+   /*let colors = "{{$color}}";
+            for(let color in "{{$color}}"){
+                colorOptions+=`<option value="${{ color.id }}">${{color.name }}</option>`;
+            }*/
+
+              /* let colorOptions = '<option value="">select</option>';
+        let colors = "{{$color}}"
+        for(let color in colors){
+            colorOptions+=`<option value="${{ color.id }}">${{color.name }}</option>`;
+        }*/

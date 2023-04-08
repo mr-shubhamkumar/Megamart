@@ -69,6 +69,6 @@
 
         </tbody>
     </table>
-
+{{$data->links()}}
 </div>
 @endsection
