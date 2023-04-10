@@ -45,7 +45,6 @@ class ProductController extends Controller
         $product->title = $req->title;
         $product->description = $req->description;
         $product->slug = Str::slug($req->title);
-
         $product->save();
 
         return redirect()->route('dpanel.brand.index')->with('success','New Products added successfully');
