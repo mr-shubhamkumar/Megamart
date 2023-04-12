@@ -76,7 +76,7 @@
             let html = `<div class="relative">
                         <label for="${id}" class="flex items-center justify-center rounded-md shadow cursor-pointer">
                             <input type="file" name="images[]" id="${id}" onchange="setImagePreview(this, event)"
-                                accept="image/*" class="hidden" required>
+                                accept="image/*" class="hidden" >
                             <img src="https://placehold.jp/400x600.png?text=Add%20Image"
                                 class="rounded-md aspect-[2/3] object-cover" alt="">
                         </label>
@@ -233,7 +233,7 @@
                 </div>
             </section>
 
-            <button class="text-black">Submit</button>
+            <button class="text-white bg-indigo-500 text-center font-medium w-full py-2">Add New Product</button>
         </form>
     </div>
 @endsection
