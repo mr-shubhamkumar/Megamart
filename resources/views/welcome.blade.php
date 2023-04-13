@@ -48,8 +48,11 @@
     <section class="px-6 md:px-28 mt-6">
         <h3 class="text-gray font-medium mb-2">Flash Sale</h3>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            @foreach (range(1, 4) as $item)
-                <x-product.card />
+            @foreach ($products as $item)
+                @if($item->variant->isNotEmpty())
+
+                    <x-product.card1 :products="$item" />
+                @endif
             @endforeach
         </div>
     </section>
@@ -82,8 +85,11 @@
             <a href="{{route('products')}}"><h3 class="text-violet-600 font-medium mb-2">All All</h3></a>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            @foreach (range(1, 12) as $item)
-                <x-product.card />
+            @foreach ($products as $item)
+                @if($item->variant->isNotEmpty())
+
+                <x-product.card1 :products="$item" />
+                @endif
             @endforeach
         </div>
     </section>

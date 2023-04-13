@@ -150,12 +150,13 @@ class ProductController extends Controller
             $variant->save();
         }
 
-        foreach ($req->images as $key =>$image){
+        foreach ($req->images as $key=>$image){
 
             if (isset($req->image_ids[$key])){
                 $productImage =  ProductImage::find($req->image_ids[$key]);
             Storage::disk('public')->delete($productImage->path);
                 $productImage->path = $image->store('media','public');
+                $productImage->save();
 
             }else{
                 $productImage = new ProductImage;
