@@ -237,7 +237,7 @@
                         <div class="relative">
                             <label for="img-1" class="flex items-center justify-center rounded-md shadow cursor-pointer">
                                 <input type="file" name="images[]" id="img-1" onchange="setImagePreview(this, event)"
-                                       accept="image/*" class="hidden" required>
+                                       accept="image/*" class="hidden" >
                                 <img src="{{asset('storage/'. $item->path)}}"
                                      class="rounded-md aspect-[2/3] object-cover" alt="">
                             </label>
@@ -250,7 +250,7 @@
                         <div class="relative">
                             <label for="img-1" class="flex items-center justify-center rounded-md shadow cursor-pointer">
                                 <input type="file" name="images[]" id="img-1" onchange="setImagePreview(this, event)"
-                                       accept="image/*" class="hidden" required>
+                                       accept="image/*" class="hidden" >
                                 <img src="https://placehold.jp/400x600.png?text=Add%20Image"
                                      class="rounded-md aspect-[2/3] object-cover" alt="">
                             </label>

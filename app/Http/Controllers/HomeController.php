@@ -19,6 +19,26 @@ class HomeController extends Controller
 
 
     public function productDetails($slug){
-        return view('product_details');
+        $product = Product::with([
+            'image',
+            'brand',
+            'variant'=>function($q){
+                $q->with('color','size');
+            }
+        ])->where('slug',$slug)->first();
+
+        abort_if(!$product,404);
+
+
+
+        $products = Product::with([
+            'image',
+            'variant'=>function($q){
+                $q->with('color','size');
+            }
+        ])->latest()->limit(12)->get();
+
+//        return $product;
+        return view('product_details' ,compact('products','product'));
     }
 }
