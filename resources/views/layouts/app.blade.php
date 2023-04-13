@@ -63,7 +63,7 @@
                 <button type="button" class="absolute -bottom-5 text-gray-400 left-2 text-sm">Forgot Password</button>
                 </div>
 
-                <button type="button" class="bg-violet-500 mt-4 text-white font-medium py-1 rounded">Login</button>
+                <button type="button" onclick="login()" class="bg-violet-500 mt-4 text-white font-medium py-1 rounded">Login</button>
                 <button type="button" onclick="toggleLoginAndRegister()" class="text-sm text-gray-400 ">Don't have an account <span class="text-violet-500 underline">Register Now</span> </button>
             </form>
 
@@ -87,10 +87,10 @@
 
                 <div class="relative border rounded ">
                     <label class="text-gray-400 bg-white px-1 absolute -top-3 left-3">Password</label>
-                    <input type="password" name="email" placeholder="Enter Your Password" class="w-full px-2 pt-1.5 placeholder-slate-300 bg-transparent  focus:outline-none">
+                    <input type="password" name="password" placeholder="Enter Your Password" class="w-full px-2 pt-1.5 placeholder-slate-300 bg-transparent  focus:outline-none">
                 </div>
 
-                <button type="button" class="bg-violet-500 mt-4 text-white font-medium py-1 rounded">Register</button>
+                <button type="button" onclick="register()" class="bg-violet-500 mt-4 text-white font-medium py-1 rounded">Register</button>
                 <button type="button" onclick="toggleLoginAndRegister()" class="text-sm text-gray-400 ">Already have an account <span class="text-violet-500 underline">Login Now</span> </button>
             </form>
 
@@ -134,7 +134,7 @@
         <p class="text-gray-400 text-center my-3">Copyright &copy; {{ date('Y') }} MegaMart </p>
     </footer>
 
-
+    @vite('resources/js/app.js')
     <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
 
     <script>
@@ -148,6 +148,76 @@
         }
 
         const toggleLoginPopup = ()=>document.getElementById('login-popup').classList.toggle('hidden');
+
+
+
+        // Authentication Functions
+        const login = async ()=>{
+            const form = document.getElementById('login');
+            const formData = new FormData(form);
+
+            let isError = false;
+
+            for (const [key, value] of formData){
+                if (value.length == 0 || value == '') isError = true;
+            }
+
+            if (isError){
+                alert('Fill required fields');
+                return;
+            }
+
+            try {
+                let response = await axios.post('/login', formData);
+                if (response.status == 200){
+                    window.location.reload();
+                }else {
+                    alert(response.data.msg)
+                }
+            }catch (error) {
+                alert(error.response.data.msg)
+            }
+
+        }
+
+
+
+
+
+        const register = async ()=>{
+            const form = document.getElementById('register');
+            const formData = new FormData(form);
+
+            let isError = false;
+
+            for (const [key, value] of formData){
+                if (value.length == 0 || value == '') isError = true;
+            }
+
+            if (isError){
+                alert('Fill required fields');
+                return;
+            }
+
+            try {
+                let response = await axios.post('/register', formData);
+                if (response.status == 200){
+                    window.location.reload();
+                }else {
+                    alert(response.data.msg)
+                }
+            }catch (error) {
+                let errors = Object.values(error.response.data);
+                let msg = '';
+                errors.forEach(err =>{
+                    msg += err +'\n';
+                });
+
+
+                if (msg != '') alert(msg);
+
+            }
+        }
     </script>
 
     @stack('scripts')
