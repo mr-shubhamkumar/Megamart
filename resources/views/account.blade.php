@@ -4,7 +4,7 @@
     const activeTab = (id)=>{
         let tab = document.getElementById(id)
         let tabContainer = document.getElementById('tabContainer').querySelectorAll('.tabContent');
-      
+
         tabContainer.forEach(element => {
             element.classList.add('hidden');
         });
@@ -37,7 +37,7 @@
             <li id="nav-profile" onclick="activeTab('profile')" class="cursor-pointer">My Profile</li>
             <li id="nav-orders" onclick="activeTab('orders')"  class="cursor-pointer">My Orders</li>
             <li id="nav-address" onclick="activeTab('address')"  class="cursor-pointer">My Address</li>
-            {{-- <li onclick="activeTab()">Acount Setting</li> --}}
+             <li><a href="{{route('logout')}}" class="flex">Logout</a></li>
         </ul>
     </div>
 
@@ -48,15 +48,15 @@
             <section id="profile" class="tabContent border border-slate-300 rounded px-4 pt-2 pb-4">
                 <h3 class="font-medium text-lg text-gray-900">Personal Information</h3>
                 <hr>
-            
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
+
                     <div class="mt-4  relative border border-slate-300 rounded">
                         <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">First Name</label>
                         <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text" name="" id="name"
                             value="Shubham">
                     </div>
-            
+
                     <div class="mt-4  relative border border-slate-300 rounded">
                         <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Last Name</label>
                         <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text" name="" id="name"
@@ -80,16 +80,16 @@
                 </div>
             </section>
             {{-- My Profile End--}}
-            
-            
+
+
             {{-- My Orders --}}
             <section id="orders" class="tabContent hidden border border-slate-300 rounded px-4 pt-2 pb-4">
                 <h3 class="font-medium text-lg text-gray-900">My Orders </h3>
                 <hr class="mb-4">
-            
-            
+
+
                 <div class="grid grid-cols-1 gap-6">
-            
+
                     <div class="flex flex-col md:flex-row justify-between ">
                         <div>
                             <div class="mb-1 flex flex-wrap gap-3">
@@ -104,24 +104,24 @@
                                     <span class="font-medium">Order ID</span>
                                     <span>3242342342</span>
                                 </div>
-            
+
                                 <div class="flex flex-col  text-gray-800 leading-5">
                                     <span class="font-medium">Shipped Date</span>
                                     <span>03,Dec,2023</span>
                                 </div>
-            
+
                                 <div class="flex flex-col  text-gray-800 leading-5">
                                     <span class="font-medium">Total</span>
                                     <span>$ 15000</span>
                                 </div>
-            
+
                                 <div class="flex flex-col leading-5">
                                     <span class="font-medium text-gray-800">Status</span>
                                     <span class="font-medium text-green-500">Deliver</span>
                                 </div>
                             </div>
                         </div>
-            
+
                         <div class="shrink-0 flex flex-col gap-2 my-2">
                             <button class="border borde-slate-400 text-black font-medium uppercase px-4 rounded-sm">View
                                 Order</button>
@@ -146,25 +146,25 @@
                                     <span class="font-medium">Order ID</span>
                                     <span>3242342342</span>
                                 </div>
-            
+
                                 <div class="flex flex-col  text-gray-800 leading-5">
                                     <span class="font-medium">Shipped Date</span>
                                     <span>03,Dec,2023</span>
                                 </div>
-            
+
                                 <div class="flex flex-col  text-gray-800 leading-5">
                                     <span class="font-medium">Total</span>
                                     <span>$ 15000</span>
                                 </div>
-            
+
                                 <div class="flex flex-col leading-5">
                                     <span class="font-medium text-gray-800">Status</span>
                                     <span class="font-medium text-green-500">Processing</span>
                                 </div>
                             </div>
                         </div>
-            
-            
+
+
                         <div class="shrink-0 flex flex-col gap-2 my-2">
                             <button class="border borde-slate-400 text-black font-medium uppercase px-4 rounded-sm">View
                                 Order</button>
@@ -189,25 +189,25 @@
                                     <span class="font-medium">Order ID</span>
                                     <span>3242342342</span>
                                 </div>
-            
+
                                 <div class="flex flex-col  text-gray-800 leading-5">
                                     <span class="font-medium">Shipped Date</span>
                                     <span>03,Dec,2023</span>
                                 </div>
-            
+
                                 <div class="flex flex-col  text-gray-800 leading-5">
                                     <span class="font-medium">Total</span>
                                     <span>$ 15000</span>
                                 </div>
-            
+
                                 <div class="flex flex-col leading-5 ">
                                     <span class="font-medium text-gray-800">Status</span>
                                     <span class="font-medium text-green-500">Out For Deliver</span>
                                 </div>
                             </div>
                         </div>
-            
-            
+
+
                         <div class="shrink-0 flex flex-col gap-2 my-2">
                             <button class="border borde-slate-400 text-black font-medium uppercase px-4 rounded-sm">Track
                                 order</button>
@@ -217,15 +217,15 @@
                         </div>
                     </div>
                 </div>
-            
+
             </section>
             {{-- My Orders End--}}
-            
+
             {{-- My Delivery Addresses --}}
             <section id="address" class="tabContent hidden border border-slate-300 rounded px-4 pt-2 pb-4">
                 <h3 class="font-medium text-lg text-gray-900">My Delivery Addresses</h3>
                 <hr>
-            
+
                 <div class="grid grid-cols-1 md:grid-cols-3  gap-4 mt-4">
                     @foreach (range(1,4) as $loop)
                     <div class="p-2 rounded shadow bg-gray-100">

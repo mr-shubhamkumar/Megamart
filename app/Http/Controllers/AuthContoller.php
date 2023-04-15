@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ForgotPassword;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthContoller extends Controller
 {
@@ -52,5 +55,34 @@ class AuthContoller extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
+    }
+
+
+    public function forgot(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'email'=> 'required|email',
+        ]);
+
+        if ($validator->fails())return response()->json('The email filed is required',401);
+
+        $user = User::where('email', $request->email)->first();
+        if ($user){
+            $token = Str::random(64);
+            $user->remember_token = $token ;
+            $user->save();
+
+            $link = route('reset',['token'=>$token]);
+            Mail::to($request->email)->send(new ForgotPassword($link));
+
+            return  response()->json(['msg'=>'Reset Email Send Successfully'],200);
+        }
+
+        return  response()->json(['msg'=>'The provided email not match out records'],401);
+
+    }
+
+    public function reset(Request $request)
+    {
     }
 }

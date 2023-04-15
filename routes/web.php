@@ -16,6 +16,8 @@ Route::controller(AuthContoller::class)->group(function (){
     Route::get('/logout','logout')->name('logout');
     Route::post('/login','login')->name('login');
     Route::post('/register','register')->name('register');
+    Route::post('/forgot','forgot')->name('forgot');
+    Route::match(['GET','POST'],'/reset','reset')->name('reset');
 });
 
 

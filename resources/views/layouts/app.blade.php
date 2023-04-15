@@ -48,7 +48,7 @@
             top-14 right-1/2 md:right-1 left-1/2 md:left-auto
             -translate-x-1/2 md:translate-x-0 z-50
              bg-white border rounded shadow-lg py-2 w-11/12 md:w-80 hidden">
-            <h2 class="text-center text-lg font-bold">Login</h2>
+            <h2 id="form-title" class="text-center capitalize text-lg font-bold">Login</h2>
 
              {{-- Login Form--}}
             <form action="" method="post" id="login" class="grid grid-cols-1 gap-3 p-2">
@@ -59,18 +59,18 @@
 
                 <div class="relative border rounded ">
                     <label class="text-gray-400 bg-white px-1 absolute -top-3 left-3">Password</label>
-                    <input type="password" name="email" placeholder="Enter Your Password" class="w-full px-2 pt-1.5 placeholder-slate-300 bg-transparent  focus:outline-none">
-                <button type="button" class="absolute -bottom-5 text-gray-400 left-2 text-sm">Forgot Password</button>
+                    <input type="password" name="password" placeholder="Enter Your Password" class="w-full px-2 pt-1.5 placeholder-slate-300 bg-transparent  focus:outline-none">
+                <button type="button"  onclick="toggleForms('forgot')" class="absolute -bottom-5 text-gray-400 left-2 text-sm">Forgot Password</button>
                 </div>
 
                 <button type="button" onclick="login()" class="bg-violet-500 mt-4 text-white font-medium py-1 rounded">Login</button>
-                <button type="button" onclick="toggleLoginAndRegister()" class="text-sm text-gray-400 ">Don't have an account <span class="text-violet-500 underline">Register Now</span> </button>
+                <button type="button" onclick="toggleForms('register')" class="text-sm text-gray-400 ">Don't have an account <span class="text-violet-500 underline">Register Now</span> </button>
             </form>
 
 
 
             {{-- Register Form--}}
-            <form action="" method="post" id="register" class="grid grid-cols-1 gap-3 p-2 hidden">
+            <form action="" method="post" id="register" class="grid capitalize grid-cols-1 gap-3 p-2 hidden">
                 <div class="relative border rounded ">
                     <label class="text-gray-400 bg-white px-1 absolute -top-3 left-3">First Name</label>
                     <input type="text" name="first_name" placeholder="Enter Your Email" class="w-full px-2 pt-1.5 placeholder-slate-300 bg-transparent  focus:outline-none">
@@ -91,9 +91,25 @@
                 </div>
 
                 <button type="button" onclick="register()" class="bg-violet-500 mt-4 text-white font-medium py-1 rounded">Register</button>
-                <button type="button" onclick="toggleLoginAndRegister()" class="text-sm text-gray-400 ">Already have an account <span class="text-violet-500 underline">Login Now</span> </button>
+                <button type="button" onclick="toggleForms('login')" class="text-sm text-gray-400 ">Already have an account <span class="text-violet-500 underline">Login Now</span> </button>
             </form>
 
+
+
+            {{-- Forget Password Form--}}
+            <form action="" method="post" id="forgot" class="grid grid-cols-1 gap-3 p-2 hidden">
+                <div class="relative border rounded ">
+                    <label class="text-gray-400 bg-white px-1 absolute -top-3 left-3">Email</label>
+                    <input type="email" name="email" placeholder="Enter Your Email" class="w-full px-2 pt-1.5 placeholder-slate-300 bg-transparent  focus:outline-none">
+                </div>
+                <div>
+
+                    <button type="button" onclick="toggleForms('login')" class="text-sm text-gray-400 ">Login</button>
+                </div>
+
+                <button type="button" onclick="forgot()" class="bg-violet-500 mt-4 text-white font-medium py-1 rounded">Send Reset Link</button>
+
+            </form>
 
 
         </div>
@@ -138,13 +154,18 @@
     <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
 
     <script>
-        const  toggleLoginAndRegister = ()=>{
+        const  toggleForms = (id)=>{
             let loginForm = document.getElementById('login');
-            loginForm.classList.toggle('hidden')
-             document.getElementById('register').classList.toggle('hidden');
+            let registerForm = document.getElementById('register');
+            let forgetForm = document.getElementById('forgot');
 
-            loginForm.previousSibling.previousSibling.innerHTML =
-                loginForm.classList.contains('hidden') ? 'Register': 'Login';
+
+            loginForm.classList.add('hidden')
+            registerForm.classList.add('hidden');
+            forgetForm.classList.add('hidden');
+            document.getElementById(id).classList.remove('hidden')
+
+            document.getElementById('form-title').innerHTML = id;
         }
 
         const toggleLoginPopup = ()=>document.getElementById('login-popup').classList.toggle('hidden');
@@ -180,10 +201,7 @@
 
         }
 
-
-
-
-
+        // Registre
         const register = async ()=>{
             const form = document.getElementById('register');
             const formData = new FormData(form);
@@ -218,6 +236,34 @@
 
             }
         }
+
+       // Forgot
+
+        const forgot = async ()=>{
+            const form = document.getElementById('forgot');
+            const formData = new FormData(form);
+
+            let isError = false;
+
+            for (const [key, value] of formData){
+                if (value.length == 0 || value == '') isError = true;
+            }
+
+            if (isError){
+                alert('Fill required fields');
+                return;
+            }
+
+            try {
+                let response = await axios.post('/forgot', formData);
+
+                    alert(response.data.msg)
+            }catch (error) {
+                alert(error.response.data.msg)
+            }
+
+        }
+
     </script>
 
     @stack('scripts')
