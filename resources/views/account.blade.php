@@ -49,35 +49,36 @@
                 <h3 class="font-medium text-lg text-gray-900">Personal Information</h3>
                 <hr>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    @csrf
 
                     <div class="mt-4  relative border border-slate-300 rounded">
                         <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">First Name</label>
-                        <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text" name="" id="name"
-                            value="Shubham">
+                        <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text" name="first_name" id="name"
+                            value="{{ auth()->user()->first_name }}">
                     </div>
 
                     <div class="mt-4  relative border border-slate-300 rounded">
                         <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Last Name</label>
-                        <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text" name="" id="name"
-                            value="kumar">
+                        <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text" name="last_name" id="name"
+                            value="{{ auth()->user()->last_name }}">
                     </div>
                     <div class="mt-4  relative border border-slate-300 rounded">
                         <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Mobile Number</label>
-                        <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text" name="" id="name"
-                            value="1234567890">
+                        <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="tel" maxlength="10" name="mobile" id="name"
+                            value="{{ auth()->user()->mobile }}">
                     </div>
                     <div class="mt-4  relative border border-slate-300 rounded">
                         <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Email Adddress</label>
-                        <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="email" name="" id="name"
-                            value="shubham@gmail.com">
+                        <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="email" name="email" id="name"
+                            value="{{ auth()->user()->email }}">
                     </div>
                     <div></div>
                     <div>
                         <button
                             class="bg-violet-600 rounded py-1 text-center w-full shoadow text-white uppercase font-medium">Update</button>
                     </div>
-                </div>
+                </form>
             </section>
             {{-- My Profile End--}}
 

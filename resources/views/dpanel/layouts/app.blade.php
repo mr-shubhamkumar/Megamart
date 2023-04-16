@@ -58,11 +58,10 @@
 
 
 
-    <main >
-{{--        <div class="px-4 py-6">--}}
+    <main class="dd-main">
+        <div class="px-4 py-6">
             @yield('body_content')
-
-{{--        </div>--}}
+        </div>
     </main>
 
     <script src="{{ asset('dd4you/dpanel/js/dd4you.js') }}"></script>

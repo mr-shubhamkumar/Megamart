@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->foreignId('brand_id')->nullable()->constrained()->onUpdate('cascade');
             $table->foreignId('category_id')->constrained()->onUpdate('cascade');
+            $table->timestamps();
         });
     }
 

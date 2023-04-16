@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController as AccountControllerAlias;
 use App\Http\Controllers\AuthContoller;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\HomeController;
@@ -20,9 +21,15 @@ Route::controller(AuthContoller::class)->group(function (){
     Route::match(['GET','POST'],'/reset','reset')->name('reset');
 });
 
+//Frontend Page Account
+Route::controller(AccountControllerAlias::class)->group(function (){
+    Route::get('/account', 'index')->name('account.index');
+    Route::post('/account', 'index')->name('account.index');
+
+});
 
 
+//Route::view('/account', 'account')->name('account');
 Route::view('/products', 'products')->name('products');
 Route::view('/cart', 'cart')->name('cart');
 Route::view('/wishlist', 'wishlist')->name('wishlist');
-Route::view('/account', 'account')->name('account');

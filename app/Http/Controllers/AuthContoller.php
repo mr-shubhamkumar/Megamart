@@ -38,7 +38,9 @@ class AuthContoller extends Controller
         if ($validator->fails())return response()->json($validator->messages(),401);
 
         $user = new  User;
-        $user->name = $request->first_name ." ".$request->last_name;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->mobile = 0;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
@@ -84,5 +86,19 @@ class AuthContoller extends Controller
 
     public function reset(Request $request)
     {
+        if ($request->method()=="GET") return view('reset_password');
+        $request->validate([
+            'token'=>'required',
+            'password'=>'required|confirmed'
+        ]);
+        $user = User::where('remember_token',$request->token)->first();
+        if ($user){
+            $user->remember_token = null;
+            $user->password = bcrypt($request->password);
+
+            $user->save();
+            return redirect()->route('landing_page')->with('success','Password Update Successfully');
+        }
+        return redirect()->route('landing_page')->with('error','Invalid Token');
     }
 }

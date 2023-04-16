@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet" href="{{ asset('dd4you/dpanel/js/cute-alert/style.css') }}">
     @stack('css')
     <!-- Styles -->
     @vite('resources/css/app.css')
@@ -31,7 +31,7 @@
         <div class="text-2xl relative">
             <a href="{{ route('wishlist') }}"><i class='bx bx-heart'></i></a>
             @auth
-            <a href="{{ route('account') }}"><i class='bx bx-user'></i></a>
+            <a href="{{ route('account.index') }}"><i class='bx bx-user'></i></a>
             @else
             <button onclick="toggleLoginPopup()" ><i class='bx bx-user'></i></button>
             @endauth
@@ -151,7 +151,71 @@
     </footer>
 
     @vite('resources/js/app.js')
+    <script src="{{ asset('dd4you/dpanel/js/dd4you.js') }}"></script>
+    <script src="{{ asset('dd4you/dpanel/js/cute-alert/cute-alert.js') }}"></script>
+    <script src="{{ asset('dd4you/dpanel/js/jquery-3.6.1.min.js') }}"></script>
     <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+
+    <script>
+        @if (Session::has('success'))
+        cuteToast({
+            type: "success",
+            message: "{{ session('success') }}",
+        })
+        @endif
+
+        @if (Session::has('error'))
+        cuteToast({
+            type: "error",
+            message: "{{ session('error') }}",
+        })
+        @endif
+
+        @if (Session::has('info'))
+        cuteToast({
+            type: "info",
+            message: "{{ session('info') }}",
+        })
+        @endif
+
+        @if (Session::has('warning'))
+        cuteToast({
+            type: "warning",
+            message: "{{ session('warning') }}",
+        })
+        @endif
+
+        const openSidebar = (e) => {
+            // e.classList.remove();
+            // e.classList.add('bxl-xing');
+            document.querySelector('.dd-aside').classList.toggle('left-0');
+            if (!isMobileResponsive()) document.querySelector('.dd-main').classList.toggle('w-[calc(100%-220px)]');
+        }
+
+        if (isMobileResponsive()) {
+            document.querySelector('.dd-aside').classList.remove('left-0')
+            document.querySelector('.dd-main').classList.remove('w-[calc(100%-220px)]')
+        } else {
+            document.querySelector('.dd-aside').classList.add('left-0')
+            document.querySelector('.dd-main').classList.add('w-[calc(100%-220px)]')
+        }
+        window.addEventListener('resize', function() {
+            if (isMobileResponsive()) {
+                document.querySelector('.dd-aside').classList.remove('left-0')
+                document.querySelector('.dd-main').classList.remove('w-[calc(100%-220px)]')
+            } else {
+                document.querySelector('.dd-aside').classList.add('left-0')
+                document.querySelector('.dd-main').classList.add('w-[calc(100%-220px)]')
+            }
+        });
+
+        const toggleSubmenu = (e) => {
+            let ele = e.nextElementSibling;
+            ele.classList.toggle('show');
+            e.querySelector('.bx-chevron-right').classList.toggle('bx-rotate-90');
+            ele.style.height = ele.style.height ? null : ele.scrollHeight + 'px';
+        }
+    </script>
 
     <script>
         const  toggleForms = (id)=>{
@@ -268,5 +332,6 @@
 
     @stack('scripts')
 </body>
+
 
 </html>
