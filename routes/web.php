@@ -23,6 +23,15 @@ Route::controller(AuthContoller::class)->group(function (){
 
 //Frontend Page Account
 Route::controller(AccountControllerAlias::class)->group(function (){
+
+    Route::prefix('account')->group(function (){
+        Route::get('address','newAddress')->name('address.create');
+        Route::post('address','newAddress')->name('address.store');
+
+        Route::get('address/{id}','editAddress')->name('address.edit');
+        Route::put('address/{id}','editAddress')->name('address.update');
+    });
+
     Route::get('/account', 'index')->name('account.index');
     Route::post('/account', 'index')->name('account.index');
 

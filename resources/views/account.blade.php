@@ -228,22 +228,30 @@
                 <hr>
 
                 <div class="grid grid-cols-1 md:grid-cols-3  gap-4 mt-4">
-                    @foreach (range(1,4) as $loop)
+
+                    @foreach ($addresses as $item)
+                        @php
+                        $full_name = $item->first_name." ". $item->last_name;
+                        @endphp
                     <div class="p-2 rounded shadow bg-gray-100">
                         <div class="flex justify-between items-center">
                             <p class="text-gray-800 font-medium hover:text-violet-600 duration-300 cursor-pointer">
-                                Shubham kumar <small>(Home address)</small>
+                                {{$item->first_name." ".$item->last_name}} <small>({{$item->tag}} Address)</small>
                             </p>
+                            <a href="{{ route('address.edit',$item->id) }}" class="">
                             <i class="bx bx-pencil">Edit</i>
+                            </a>
                         </div>
-                        <p class="text-gray-600">Varanasi, Saranath ,UttarPradesh</p>
-                        <p class="text-gray-600">Mobile No : +91 1234567890</p>
+                        <p class="text-gray-600">{{$item->street_address." ,".$item->district.", ".$item->state}}</p>
+                        <p class="text-gray-600">Mobile No : +91 {{$item->mobile_no}}</p>
                     </div>
                     @endforeach
-                    <div class="flex flex-col py-6 items-center justify-center p-2 rounded shadow bg-gray-100">
+
+                    <a href="{{route('address.create')}}"
+                        class="flex flex-col py-6 items-center justify-center p-2 rounded shadow bg-gray-100">
                         <i class="bx bxs-plus-circle text-gray-800"></i>
                         <p class="text-gray-400 text-2xl">Add New Address</p>
-                    </div>
+                    </a>
                 </div>
             </section>
             {{-- My Delivery Addresses End--}}
