@@ -37,6 +37,7 @@
             @endauth
             <a href="{{ route('cart') }}"><i class='bx bx-cart'></i></a>
             <span
+                id="cart_count_badge"
                 class="absolute top-0 -right-2.5 bg-indigo-500 rounded-full w-5 h-5 text-xs text-center text-white">0</span>
         </div>
     </header>
@@ -155,6 +156,7 @@
     <script src="{{ asset('dd4you/dpanel/js/cute-alert/cute-alert.js') }}"></script>
     <script src="{{ asset('dd4you/dpanel/js/jquery-3.6.1.min.js') }}"></script>
     <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+    <script src="{{asset('js/cart.js')}}"></script>
 
     <script>
         @if (Session::has('success'))
@@ -328,6 +330,16 @@
 
         }
 
+
+    //   cart_count_badge
+
+    const cartCount = () => {
+      let cartItems = mCart._getItems();
+      if (cartItems != null){
+          document.getElementById('cart_count_badge').textContent = Object.keys(cartItems).length;
+      }
+    }
+    cartCount();
     </script>
 
     @stack('scripts')

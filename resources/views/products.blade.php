@@ -7,6 +7,7 @@
 @push('scripts')
 <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
 {{-- owslider script --}}
+    <x-url-generator-js/>
 <script>
     $(document).ready(function() {
                     $(".owl-carousel").owlCarousel({
@@ -29,6 +30,42 @@
                         }
                     });
                 });
+
+    // Products Filters
+    const sortBy = (e) => {
+        let sb = e.value;
+        window.location.href = generateUrl({
+            sb
+        })
+    }
+
+    const search = () => {
+        let k = document.getElementById('search_input').value;
+        window.location.href = generateUrl({
+            k
+        });
+    }
+    const applyFilter = () => {
+        let form = document.getElementById('filter-form');
+        let formData= new FormData(form);
+        let obj = {};
+
+        for (const [key,value] of formData) {
+            if (obj.hasOwnProperty(key)){
+                obj={
+                    ...obj,
+                    [key]:`${obj[key]},${value}`
+                }
+
+            }else {
+                obj = {
+                    ...obj,
+                    [key]:value
+                }
+            }
+        }
+        window.location.href = generateUrl(obj);
+    }
 </script>
 @endpush
 
@@ -54,8 +91,8 @@
     <section class="mt-6 grid grid-cols-1 md:grid-cols-5 gap-6">
 
         {{-- Filters --}}
-       <div class="w-full md:w-auto">
-        <div class=" p-3 rounded border border-slate-300">
+        <div>
+       <form id="filter-form" class="w-full md:w-auto">
             <h4 class="text-xl font-bold font-medium text-violet-800 uppercase">Filters</h4>
             {{-- Price Filter --}}
             <div>
@@ -64,95 +101,111 @@
                     <div class="flex bg-gray-300 rounded p-1 font-medium justify-between items-center gap-2 ">
                         <span class="text-gray-400">From</span>
                         <div class="flex">
-                            <input type="text" class="w-8 bg-transparent focus:outline-none  text-right" value="0">
+                            <input type="text" name="min" pattern="[0-9]+" value="{{ request()->min }}"  class="w-8 bg-transparent focus:outline-none  text-right">
                             <span class="text-gray-800">$</span>
                         </div>
                     </div>
-        
+
                     <div class="flex bg-gray-300 rounded p-1 font-medium justify-between items-center gap-2 ">
                         <span class="text-gray-400">Up To</span>
                         <div class="flex">
-                            <input type="text" class="w-8 bg-transparent focus:outline-none  text-right" value="0">
+                            <input type="text" name="max" pattern="[0-9]+" value="{{ request()->max }}" class="w-8 bg-transparent focus:outline-none  text-right">
                             <span class="text-gray-800">$</span>
                         </div>
                     </div>
-        
+
                 </div>
             </div>
             <hr class="mt-2">
-        
-        
-        
+
+
+
             {{-- Size --}}
             <div>
                 <h3 class="text-gray font-medium mb-2">Size</h3>
                 <ul class="text-gray-400 text-sm ">
-                    <li><input type="checkbox" name="" id="small"><label for="small"> Small</label></li>
-                    <li><input type="checkbox" name="" id="medium"><label for="medium"> Medium</label></li>
-                    <li><input type="checkbox" name="" id="large"><label for="large"> Large</label></li>
+                    @foreach($sizes as $item)
+                        <li>
+                            <input type="checkbox" class="flex gap-2" name="size" id="size-{{$item->id}}" value="{{$item->id}}"
+                            @if(request()->size) @checked(in_array($item->id,explode(',', urldecode(request()->size)))) @endif>
+                            <label class="cursor-pointer" for="size-{{$item->id}}">
+                                {{ $item->name }}({{ $item->code }})
+                            </label>
+                        </li>
+                    @endforeach
+                    <input type="hidden" name="size">
                 </ul>
             </div>
-        
-        
+
+
             <hr class="mt-2">
             {{-- Color --}}
             <div>
                 <h3 class="text-gray font-medium mb-2">Color</h3>
                 <ul class="text-gray-400 text-sm flex flex-col gap-2">
+                    @foreach($colors as $item)
+
                     <li class="flex gap-2">
-                        <input type="checkbox" name="" id="color1"><label for="color1">
-                            <span style="background-color: #d80909" class="w-5 h-5 flex rounded-full">&nbsp;</span>
+                        <input type="checkbox" name="color" id="color-{{$item->id}}" value="{{$item->id}}">
+                        <label  class="cursor-pointer flex gap-1" for="color-{{$item->id}}"
+                        @if(request()->color) @checked(in_array($item->id,explode(',', urldecode(request()->color)))) @endif>
+                            <span style="background-color: {{$item->code}}" class="w-5 h-5 flex rounded-full">&nbsp;</span>{{$item->name}}
                         </label>
                     </li>
-                    <li class="flex gap-2">
-                        <input type="checkbox" name="" id="color2">
-                        <label for="color2">
-                            <span style="background-color: #5012fa" class="w-5 h-5 flex rounded-full">&nbsp;</span>
-                        </label>
-                    </li>
-                    <li class="flex gap-2"><input type="checkbox" name="" id="color3">
-                        <label for="color3">
-                            <span style="background-color: #030303" class="w-5 h-5 flex rounded-full">&nbsp;</span>
-                        </label>
-                    </li>
+                    @endforeach
+                        <input type="hidden" name="color">
                 </ul>
             </div>
             <hr class="my-2">
             <div class="flex items-center justify-between">
-                <button class="bg-violet-600 rounded-md text-white  text-center py-1 px-4">Apply Filter</button>
-                <span class="cursor-pointer bg-white rounded-full border w-7 h-7 p-4 flex items-center justify-center "><i
-                        class='bx bx-reset f-5' title="Reset Filter"></i></span>
+                <a href="{{ route('products') }}">
+                <button type="button" class="bg-violet-600 rounded-md text-white  text-center py-1 px-4">Apply Filter</button>
+                </a>
+                <span class="cursor-pointer bg-white rounded-full border w-7 h-7 p-4 flex items-center justify-center ">
+                    <i class='bx bx-reset f-5' title="Reset Filter"></i>
+                </span>
             </div>
+       </form>
         </div>
-       </div>
 
 
-        {{-- Products --}} 
+        {{-- Products --}}
         <div class=" md:col-span-4 grid grid-cols-1 md:grid-cols-3 gap-6">
 
             <div class="md:col-span-2 flex items-center px-1.5 py-1 text-sm rounded border border-slate-300">
                 <span class="w-6 border-r border-stone-300">
                     <i class='bx bx-search text-xl text-gray-400 '></i>
                 </span>
-                <input type="search" placeholder="Search 10000+Produact" class="py-l-1.5 w-full bg-transparent focus:outline-none">
+                <input type="search" id="search_input" value="{{ request()->k }}" placeholder="Search 10000+Produact"
+                       class="py-l-1.5 w-full bg-transparent focus:outline-none">
+                <button onclick="search()" class="text-violet-500">Search</button>
             </div>
 
             <div class="flex items-center px-1.5 py-1 text-sm rounded border border-slate-300">
                 <span class="w-6 border-r border-stone-300">
                     <i class='bx bx-filter text-xl text-gray-400 '></i>
-                    
+
                 </span>
-                <select class="py-l-1.5 w-full bg-transparent focus:outline-none">
-                    <option value="">Populer</option>
+                <select onchange="sortBy(this)" class="py-l-1.5 w-full bg-transparent focus:outline-none">
+                    <option value="">Featured</option>
+                    <option value="price_asc" @selected(request()->sb == 'price_asc')>Price: Low to High</option>
+                    <option value="price_desc" @selected(request()->sb == 'price_desc')>Price: High to Low</option>
+                    <option value="desc" @selected(request()->sb == 'desc')>Newest Arrivals Option</option>
                 </select>
             </div>
-           
 
 
-            
-            @foreach (range(1, 12) as $item)
-            <x-product.card />
+
+
+            @foreach ($products as $item)
+                @if($item->variant->isNotEmpty())
+
+                    <x-product.card1 :products="$item"/>
+                @endif
             @endforeach
+            <div class="md:col-span-3">
+                {{$products->links()}}
+            </div>
         </div>
     </section>
 </section>
