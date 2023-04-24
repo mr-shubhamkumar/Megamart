@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Dpanel\CategoryController;
+use App\Http\Controllers\Dpanel\CouponController;
 use App\Http\Controllers\Dpanel\ProductController;
 use App\Http\Controllers\Dpanel\BrandController;
 use App\Http\Controllers\Dpanel\ColorController;
@@ -14,9 +15,10 @@ Route::namespace('App\Http\Controllers\Dpanel')->group(function () {
 
     //AdminController
     Route::resource('product', ProductController::class)->names('product');
-    Route::resource('category', CategoryController::class)->names('category')->only('index','store','update');
-    Route::resource('brand', BrandController::class)->names('brand')->only('index','store','update');
-    Route::resource('color', ColorController::class)->names('color')->only('index','store','update');
-    Route::resource('size', SizeController::class)->names('size')->only('index','store','update');
+    Route::resource('category', CategoryController::class)->only('index','store','update');
+    Route::resource('brand', BrandController::class)->only('index','store','update');
+    Route::resource('color', ColorController::class)->only('index','store','update');
+    Route::resource('size', SizeController::class)->only('index','store','update');
+    Route::resource('coupon', CouponController::class)->only('index','store','update');
 
 });

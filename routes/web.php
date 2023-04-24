@@ -38,8 +38,12 @@ Route::controller(AccountControllerAlias::class)->group(function (){
 
 });
 
+Route::controller(\App\Http\Controllers\CartController::class)->group(function (){
+    Route::get('/cart','index')->name('cart');
+    Route::get('/cart/products','apiCartProducts');
+});
 
 //Route::view('/account', 'account')->name('account');
 //Route::view('/products', 'products')->name('products');
-Route::view('/cart', 'cart')->name('cart');
+//Route::view('/cart', 'cart')->name('cart');
 Route::view('/wishlist', 'wishlist')->name('wishlist');

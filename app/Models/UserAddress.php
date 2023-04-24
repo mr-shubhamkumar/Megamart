@@ -24,9 +24,12 @@ class UserAddress extends Model
         'note',
     ];
 
+
     public function getFullNameAttribure(){
-        return $this->first_name." ".$this->last_name ;
+        $this->full_name;
+        return $this->first_name." ".$this->last_name;
     }
+
 
     public function getFullAddressAttribure(){
         return "$this->street_address,$this->district,$this->state - $this->pin_code";

@@ -54,6 +54,10 @@
         <x-dpanel::sidebar.item name="Products" icon="bx-shopping-bag" url="{{route('dpanel.product.index')}}"
             isActive="{{ request()->segment(2) == 'Product' }}" />
 
+        <x-dpanel::sidebar.item name="Coupons" icon="bx bxs-coupon" url="{{route('dpanel.coupon.index')}}"
+            isActive="{{ request()->segment(2) == 'coupon' }}" />
+
+
     </x-dpanel::sidebar.container>
 
 
