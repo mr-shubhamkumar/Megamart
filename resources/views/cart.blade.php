@@ -2,9 +2,50 @@
 @push('scripts')
 <script>
 
+
+
     const removeItem = (e, id) => {
       mCart.remove(id);
       e.parentElement.parentElement.parentElement.remove();
+    }
+
+    const applyCoupon = () => {
+        let discountCode = document.getElementById('discount_code')
+        if (discountCode.value=='' || discountCode.value.length == 0) return;
+
+        axios.post(`${window.location.href}/coupon`,{
+            code: discountCode.value
+        })
+            .then((res)=>{
+                let coupon = res.data;
+                let subtotal = mCart.getSubTotal();
+
+                if (coupon.min_cart_amount != '' && coupon.min_cart_amount>subtotal){
+                    cuteToast({
+                        type: 'error',
+                        message:`Coupon Active above to$ ${coupon.min_cart_amount} Cart amount`,
+                    });
+                    return;
+                }
+
+            //   applyCoupon
+                let discount = 0;
+                if(coupon.types=='Fixed'){
+                    discount=coupon.value;
+                }else {
+                    discount = ((coupon.value/100)*subtotal).toFixed(2)
+                }
+                document.getElementById('discount_amount').textContent = discount;
+                document.getElementById('discount_massage').textContent = discount;
+                document.getElementById('total').textContent = subtotal-discount;
+            })
+            .catch((error)=>{
+                discountCode.value = '';
+                cuteToast({
+                    type: 'error',
+                    message:error.response.data.message,
+                })
+            })
     }
 
     setTimeout(()=>{
@@ -16,7 +57,7 @@
             .then((res)=>{
                 // console.log(res.data)
                 let  html ='';
-                console.log(res.data);
+                // console.log(res.data);
                 res.data.forEach(item =>{
                     let qty = mCart.getQty(item.id)
                     html+=  `<div class="flex gap-4 mb-3 mt-2">
@@ -112,8 +153,8 @@
                 <div class="relative p-2 py-2 mb-2 border border-slate-300 rounded-md">
                     <label class="absolute -top-3.5 left-5 text-slate-300 bg-white px-1">Discount Code</label>
                     <div class="flex justify-between">
-                        <input class="w-full focus:outline-none" type="text" placeholder="Enter Discount Code">
-                        <button class="text-violet-600 font-medium">Apply</button>
+                        <input name="discount_code" id="discount_code" class="w-full focus:outline-none" type="text" placeholder="Enter Discount Code">
+                        <button type="button" onclick="applyCoupon()" class="text-violet-600 font-medium">Apply</button>
                     </div>
                 </div>
 
@@ -127,8 +168,8 @@
                     <span class="text-gray-800 font-bold">$0</span>
                 </div>
                 <div class="mb-2 flex justify-between item-center">
-                    <span class="text-gray-400">Discount (25%)</span>
-                    <span class="text-violet-600 font-bold">$562.25</span>
+                    <span class="text-gray-400">Discount</span>
+                    <span class="text-violet-600 font-bold">$<span id="discount_amount"></span></span>
                 </div>
 
                 <div class="flex justify-between item-center">
@@ -137,7 +178,7 @@
                 </div>
                 <div class="mb-1 flex justify-between item-center bg-green-100 p-2 rounded">
                     <span class="text-green-500">Your total Savings amount  on <br> this order</span>
-                    <span class="text-green-500 font-bold">$562.25</span>
+                    <span class="text-green-500 font-bold">$<span id="discount_massage"></span></span>
                 </div>
                 <button class=" mt-3 bg-violet-600 text-white font-bold text-center w-full rounded py-1 shadow">Checkout</button>
             </div>

@@ -1,5 +1,6 @@
 class ManageCart {
     _key = 'mcart';
+    _subtotal = 0;
 
     add(product_variant_id, qty) {
         product_variant_id = parseInt(product_variant_id);
@@ -90,14 +91,26 @@ class ManageCart {
         let  subtotalElement = document.getElementById('subtotal');
         let totalElement = document.getElementById('total');
         let  items = document.getElementById('itemContainer').querySelectorAll('.itemTotalPrice');
-        let subtotal = 0;
+        this._subtotal = 0;
         items.forEach(item =>{
-            subtotal+= parseFloat(item.textContent)
+            this._subtotal+= parseFloat(item.textContent)
         });
-        subtotalElement.textContent=subtotal;
-        totalElement.textContent=subtotal;
+        subtotalElement.textContent=this._subtotal;
+        totalElement.textContent=this._subtotal;
+
+
+        document.getElementById('discount_code').value = '';
+        document.getElementById('discount_amount').textContent = 0;
+        document.getElementById('discount_massage').textContent = 0;
+
 
     }
+
+
+    getSubTotal(){
+        return this._subtotal;
+    }
+
 }
 
 const mCart = new ManageCart;

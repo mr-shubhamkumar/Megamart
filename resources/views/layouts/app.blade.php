@@ -28,7 +28,9 @@
         <a href="/">
         <img src="{{ asset('images/logo.png') }}"  alt="logo" width="100" height="80">
         </a>
+
         <div class="text-2xl relative">
+            <a href="{{ route('dpanel/login') }}" class="mt-10 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Admin Panel</a>
             <a href="{{ route('wishlist') }}"><i class='bx bx-heart'></i></a>
             @auth
             <a href="{{ route('account.index') }}"><i class='bx bx-user'></i></a>

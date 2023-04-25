@@ -41,6 +41,7 @@ Route::controller(AccountControllerAlias::class)->group(function (){
 Route::controller(\App\Http\Controllers\CartController::class)->group(function (){
     Route::get('/cart','index')->name('cart');
     Route::get('/cart/products','apiCartProducts');
+    Route::post('/cart/coupon','apiApplyCoupon');
 });
 
 //Route::view('/account', 'account')->name('account');
