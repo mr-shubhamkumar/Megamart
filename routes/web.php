@@ -42,6 +42,11 @@ Route::controller(\App\Http\Controllers\CartController::class)->group(function (
     Route::get('/cart','index')->name('cart');
     Route::get('/cart/products','apiCartProducts');
     Route::post('/cart/coupon','apiApplyCoupon');
+
+    #Peyment Route
+    Route::post('/payment/init','initPeyment')->name('payment.init');
+    Route::post('/payment/failed','peymentFailed')->name('payment.failed');
+    Route::post('/payment/verify/{id}','peymentVerify');
 });
 
 //Route::view('/account', 'account')->name('account');
