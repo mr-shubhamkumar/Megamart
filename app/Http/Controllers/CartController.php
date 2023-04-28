@@ -123,6 +123,7 @@ class CartController extends Controller
 
         $order->razorpay_order_id = $razorpayOrder['id'];
         $order->razorpay_order_status = 'created';
+
         $order->save();
 
         return response()->json([
@@ -148,16 +149,23 @@ class CartController extends Controller
 
     public function peymentVerify(Request $request, $id)
     {
+
+
+
         if ($request->razorpay_payment_id != null) {
             $order = Order::find($id);
+
             try {
 
-                $api =  new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
-                $api->utility()->verifyPaymentSignature([
-                    'razorpay_signature'=>$request->razorpay_signature,
+                $api =  new \Razorpay\Api\Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+                $api->utility->verifyPaymentSignature([
                     'razorpay_payment_id'=>$request->razorpay_payment_id,
                     'razorpay_order_id'=>$request->razorpay_order_id,
+                    'razorpay_signature'=>$request->razorpay_signature,
                 ]);
+
+                // dd($request->all());
+
 
                 $order->payment_status = 'Success';
                 $order->razorpay_order_status = 'paid';

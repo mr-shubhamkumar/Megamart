@@ -30,7 +30,7 @@
     </a>
 
 
-        <a href="/dpanel/login"
+        <a href="/dpanel/login" target="blank"
            class=" block  rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm ml-auto ml-2  ">Admin Panel</a>
 
     <div class="text-2xl relative">
