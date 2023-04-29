@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\UserAddress;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -30,9 +32,35 @@ class AccountController extends Controller
             return back()->with('success', 'Profile information update');
         }
 
-        $addresses = UserAddress::where('user_id',auth()->user()->id)->get();
+ $orders = [];
+        $addresses = [];
+        if (auth()->check()) {
+            $user_id = auth()->user()->id;
 
-        return view('account',compact('addresses'));
+            $addresses =  UserAddress::where('user_id', $user_id)->get();
+
+            $orders = Order::query()
+                ->with('items:order_id,variant_id')
+                ->where('user_id', $user_id)
+                ->get();
+        }
+
+        foreach ($orders as $k => $order) {
+            $variant_ids = array_column($order->items->toArray(), 'variant_id');
+
+            $products = Product::whereIn(
+                'id',
+                fn ($q) => $q->select('product_id')->from('variants')->whereIn('id', $variant_ids)
+            )
+                ->with('oldestImage')
+                ->get();
+
+            $images = array_column($products->toArray(), 'oldest_image');
+            $orders[$k]['images'] = array_column($images, 'path');
+        }
+
+        return view('account', compact('orders', 'addresses'));
+        
     }
 
 
@@ -42,7 +70,7 @@ class AccountController extends Controller
     {
         if ($request->method() == "GET") return view('new_address');
 
-
+        abort_if(!auth()->check(), 404);
 
         $request->validate([
             'is_default_address' => 'required',
@@ -89,10 +117,10 @@ class AccountController extends Controller
     {
         if ($request->method() == "GET"){
 
-            $data = UserAddress::find($id)->first();
+            $data = auth()->check()? UserAddress::find($id)->first() :[];
             return view('edit_address',compact('data'));
         }
-
+        abort_if(!auth()->check(), 404);
 
         $request->validate([
             'is_default_address' => 'required',

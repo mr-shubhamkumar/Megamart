@@ -247,8 +247,8 @@
                     @foreach($data->image as $item)
                         <input type="hidden" name="image_ids[]" value="{{$item->id}}">
                         <div class="relative">
-                            <label for="img-1" class="flex items-center justify-center rounded-md shadow cursor-pointer">
-                                <input type="file" name="images[]" id="img-1" onchange="setImagePreview(this, event)"
+                            <label for="img-{{$item->id}}" class="flex items-center justify-center rounded-md shadow cursor-pointer">
+                                <input type="file" name="images[]" id="img-{{$item->id}}" onchange="setImagePreview(this, event)"
                                        accept="image/*" class="hidden" >
                                 <img src="{{asset('storage/'. $item->path)}}"
                                      class="rounded-md aspect-[2/3] object-cover" alt="">
@@ -260,8 +260,8 @@
                     @endforeach
 
                         <div class="relative">
-                            <label for="img-1" class="flex items-center justify-center rounded-md shadow cursor-pointer">
-                                <input type="file" name="images[]" id="img-1" onchange="setImagePreview(this, event)"
+                            <label for="addMore" class="flex items-center justify-center rounded-md shadow cursor-pointer">
+                                <input type="file" name="images[]" id="addMore" onchange="setImagePreview(this, event)"
                                        accept="image/*" class="hidden" >
                                 <img src="https://placehold.jp/400x600.png?text=Add%20Image"
                                      class="rounded-md aspect-[2/3] object-cover" alt="">

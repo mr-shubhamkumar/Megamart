@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\AccountController as AccountControllerAlias;
-use App\Http\Controllers\AuthContoller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthContoller;
 use \App\Http\Controllers\HomeController;
+use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\AccountController as AccountControllerAlias;
 
 
 
 Route::controller(HomeController::class)->group(function (){
     Route::get('/','index')->name('landing_page');
-    Route::get('/pd/{slug}','productDetails')->name('product_details');
+    Route::get('/pd/{slug}','productDetails')->name('product_detail');
     Route::get('/products','products')->name('products');
 });
 
@@ -26,6 +27,7 @@ Route::controller(AuthContoller::class)->group(function (){
 Route::controller(AccountControllerAlias::class)->group(function (){
 
     Route::prefix('account')->group(function (){
+        Route::get('orders/{id}', 'showOrder')->name('order.show');
         Route::get('address','newAddress')->name('address.create');
         Route::post('address','newAddress')->name('address.store');
 
@@ -49,7 +51,9 @@ Route::controller(\App\Http\Controllers\CartController::class)->group(function (
     Route::post('/payment/verify/{id}','peymentVerify');
 });
 
-//Route::view('/account', 'account')->name('account');
-//Route::view('/products', 'products')->name('products');
-//Route::view('/cart', 'cart')->name('cart');
-Route::view('/wishlist', 'wishlist')->name('wishlist');
+Route::controller(WishlistController::class)->group(function () {
+    Route::get('/wishlist', 'index')->name('wishlist');
+    Route::post('/wishlist/{id}', 'toggle');
+});
+
+

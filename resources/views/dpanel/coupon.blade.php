@@ -142,20 +142,19 @@
                     " class="w-full bg-transparent border border-gray-500 rounded px-2 focus:outline-none">
                     </div>
                     <div>
-                        <label for="">Min Cart Amount</label>
-                        <input type="number" name="min_cart_amount"   placeholder="Enter Min Cart Amount
-                    " class="w-full bg-transparent border border-gray-500 rounded px-2 focus:outline-none">
+                        <label>Min Cart Amount</label>
+                        <input type="number" name="min_cart_amount" placeholder="Enter Min Cart Amount"
+                            class="w-full bg-transparent border border-gray-500 rounded py-0.5 px-2 focus:outline-none">
                     </div>
                     <div>
-                        <label for="">Valid Form </label>
-                        <input type="datetime-local" name="from_valid"
-                  class="w-full bg-transparent border border-gray-500 rounded px-2 focus:outline-none">
+                        <label>Valid From<span class="text-red-500 font-bold">*</span></label>
+                        <input type="datetime-local" name="from_valid" 
+                            class="w-full bg-transparent border border-gray-500 rounded py-0.5 px-2 focus:outline-none">
                     </div>
-
                     <div>
-                        <label for="">Valid  </label>
+                        <label>Valid To<span class="text-red-500 font-bold">*</span></label>
                         <input type="datetime-local" name="till_valid"
-                               class="w-full bg-transparent border border-gray-500 rounded px-2 focus:outline-none">
+                            class="w-full bg-transparent border border-gray-500 rounded py-0.5 px-2 focus:outline-none">
                     </div>
                     <div class="text-center ">
                         <button class="bg-violet-500 text-center text-white py-1 px-2 rounded shadow-md uppercase">Add New Coupon</button>

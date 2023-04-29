@@ -61,96 +61,106 @@
                 <li><a class="flex" href="{{ route('account.index', ['tab' => 'orders']) }}"> My Orders</a></li>
                 <li><a class="flex text-violet-500 underline" href="{{ route('account.index', ['tab' => 'address']) }}">
                         My Address</a></li>
-                <li><a href="{{ route('logout') }}" class="flex">Logout</a></li>
+                @auth
+
+                    <li><a href="{{ route('logout') }}" class="flex">Logout</a></li>
+                @endauth
             </ul>
         </div>
         <div class="md:col-span-5">
-            <section id="profile" class="tabContent border border-slate-300 rounded px-4 pt-2 pb-4">
-                <h3 class="font-medium text-lg text-gray-900 font-medium text-center">New Delivery Address</h3>
-                <hr>
+            @auth
+                <section id="profile" class="tabContent border border-slate-300 rounded px-4 pt-2 pb-4">
+                    <h3 class="font-medium text-lg text-gray-900 font-medium text-center">New Delivery Address</h3>
+                    <hr>
 
-                <form action="{{ route('address.store')}}" method="post" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    @csrf
+                    <form action="{{ route('address.store') }}" method="post" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        @csrf
 
-                    <div class="mt-4  relative border border-slate-300 rounded">
-                        <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Default
-                            Address</label>
-                        <select name="is_default_address" class="mt-2 px-3 bg-transparent focus:outline-none w-full"
-                            required>
-                            <option value="">Select</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div>
-                    <div class="mt-4  relative border border-slate-300 rounded">
-                        <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Tag</label>
-                        <select name="tag" class="mt-2 px-3 bg-transparent focus:outline-none w-full" required>
-                            <option value="">Select</option>
-                            <option value="Home">Home</option>
-                            <option value="Office">Office</option>
-                        </select>
-                    </div>
+                        <div class="mt-4  relative border border-slate-300 rounded">
+                            <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Default
+                                Address</label>
+                            <select name="is_default_address" class="mt-2 px-3 bg-transparent focus:outline-none w-full"
+                                required>
+                                <option value="">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="mt-4  relative border border-slate-300 rounded">
+                            <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Tag</label>
+                            <select name="tag" class="mt-2 px-3 bg-transparent focus:outline-none w-full" required>
+                                <option value="">Select</option>
+                                <option value="Home">Home</option>
+                                <option value="Office">Office</option>
+                            </select>
+                        </div>
 
-                    <div class="mt-4  relative border border-slate-300 rounded">
-                        <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">First
-                            Name</label>
-                        <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text" name="first_name"
-                            required>
-                    </div>
+                        <div class="mt-4  relative border border-slate-300 rounded">
+                            <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">First
+                                Name</label>
+                            <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text" name="first_name"
+                                required>
+                        </div>
 
-                    <div class="mt-4  relative border border-slate-300 rounded">
-                        <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Last Name</label>
-                        <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text" name="last_name"
-                            required>
-                    </div>
-                    <div class="mt-4  relative border border-slate-300 rounded">
-                        <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Mobile
-                            Number</label>
-                        <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="tel" maxlength="10"
-                            name="mobile_no" required>
-                    </div>
+                        <div class="mt-4  relative border border-slate-300 rounded">
+                            <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Last Name</label>
+                            <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text" name="last_name"
+                                required>
+                        </div>
+                        <div class="mt-4  relative border border-slate-300 rounded">
+                            <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Mobile
+                                Number</label>
+                            <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="tel" maxlength="10"
+                                name="mobile_no" required>
+                        </div>
 
-                    <div class="mt-4  relative border border-slate-300 rounded">
-                        <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Street
-                            Address</label>
-                        <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text"
-                            name="street_address" required>
-                    </div>
+                        <div class="mt-4  relative border border-slate-300 rounded">
+                            <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Street
+                                Address</label>
+                            <input class="mt-2 px-3 bg-transparent focus:outline-none w-full" type="text"
+                                name="street_address" required>
+                        </div>
 
-                    <div class="mt-4  relative border border-slate-300 rounded">
-                        <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Pin code</label>
-                        <input type="tel" maxlength="6" name="pin_code" onkeyup="getDistrictStateByPinCode(this)"
-                            class="mt-2 px-3 bg-transparent focus:outline-none w-full" required>
-                    </div>
+                        <div class="mt-4  relative border border-slate-300 rounded">
+                            <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">Pin code</label>
+                            <input type="tel" maxlength="6" name="pin_code" onkeyup="getDistrictStateByPinCode(this)"
+                                class="mt-2 px-3 bg-transparent focus:outline-none w-full" required>
+                        </div>
 
-                    <div class="mt-4  relative border border-slate-300 rounded">
-                        <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">district</label>
-                        <select name="district" id="district" class="mt-2 px-3 bg-transparent focus:outline-none w-full"
-                            required>
+                        <div class="mt-4  relative border border-slate-300 rounded">
+                            <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">district</label>
+                            <select name="district" id="district" class="mt-2 px-3 bg-transparent focus:outline-none w-full"
+                                required>
 
-                        </select>
-                    </div>
-                    <div class="mt-4  relative border border-slate-300 rounded">
-                        <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">State</label>
-                        <select name="state" id="state" class="mt-2 px-3 bg-transparent focus:outline-none w-full"
-                            required>
+                            </select>
+                        </div>
+                        <div class="mt-4  relative border border-slate-300 rounded">
+                            <label for="" class="absolute -top-3 left-3.5 bg-white px-1 text-gray-400">State</label>
+                            <select name="state" id="state" class="mt-2 px-3 bg-transparent focus:outline-none w-full"
+                                required>
 
-                        </select>
-                    </div>
-
-
+                            </select>
+                        </div>
 
 
-                    <div>
-                        <label>&nbsp;</label>
-                        <button
-                            class="bg-violet-600  rounded py-1 text-center w-full shoadow text-white uppercase font-medium">
-                            Save
-                        </button>
-                    </div>
 
-                </form>
-            </section>
+
+                        <div>
+                            <label>&nbsp;</label>
+                            <button
+                                class="bg-violet-600  rounded py-1 text-center w-full shoadow text-white uppercase font-medium">
+                                Save
+                            </button>
+                        </div>
+
+                    </form>
+                </section>
+                @else
+                <div class="border w-full py-10 mt-3 flex justify-center rounded-md items-center">
+                    <button type="button" class="text-violet-500 font-medium" onclick="toggleLoginPopup()">Login
+                        to Access Your Acount</button>
+                </div>
+            @endauth
         </div>
     </div>
 @endsection

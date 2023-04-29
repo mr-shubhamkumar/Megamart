@@ -251,11 +251,19 @@
 
                     </div>
 
-                    <a href="{{ route('address.create') }}"
+                   @auth
+                   <a href="{{ route('address.create') }}"
                         class="bg-slate-300 rounded-md px-4 shrink-0  flex flex-col items-center justify-center">
                         <i class='bx bxs-plus-circle text-lg'></i>
                         <span class="text-gray-400 text-sm">Address</span>
                     </a>
+                    @else
+                    <button  onclick="toggleLoginPopup()"
+                    class="bg-slate-300 rounded-md px-4 shrink-0  flex flex-col items-center justify-center">
+                    <i class='bx bxs-plus-circle text-lg'></i>
+                    <span class="text-gray-400 text-sm">Address</span>
+                    </button>
+                    @endauth
                 </div>
                 {{-- Delivery Address End --}}
 
@@ -306,10 +314,20 @@
                         <span class="text-green-500">Your total Savings amount on <br> this order</span>
                         <span class="text-green-500 font-bold">&#8377;<span id="discount_massage"></span></span>
                     </div>
+
+                    @auth
+
                     <button type="button" onclick="checkout()"
-                        class=" mt-3 bg-violet-600 text-white font-bold text-center w-full rounded py-1 shadow">
-                        Checkout
+                    class=" mt-3 bg-violet-600 text-white font-bold text-center w-full rounded py-1 shadow">
+                    Checkout
                     </button>
+                    @else
+                    <button type="button" onclick="toggleLoginPopup()"
+                    class=" mt-3 bg-violet-600 text-white font-bold text-center w-full rounded py-1 shadow">
+                    Checkout
+                    </button>
+
+                    @endauth
                 </div>
             </div>
             {{-- Right Side End --}}

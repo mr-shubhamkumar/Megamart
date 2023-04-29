@@ -2,25 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Color;
-use App\Models\Product;
+use Carbon\Carbon;
 use App\Models\Size;
+use App\Models\User;
+use App\Models\Color;
+use App\Models\Coupon;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+
+  public function index()
     {
         $products = Product::with([
-            'image', 'variant' => function ($q) {
+            'image',
+            'variant' => function ($q) {
                 $q->with('color', 'size');
             }
         ])
             ->withCount('image')
             ->havingRaw('image_count > 0')
             ->latest()->limit(12)->get();
-//        return $products;
-        return view('welcome', compact('products'));
+
+        if (auth()->check()) {
+            $user = User::find(auth()->user()->id);
+            $products = $user->attachFavoriteStatus($products);
+        }
+
+        $coupons = Coupon::whereDate('from_valid', '<=', Carbon::now())
+            ->where(function ($q) {
+                $q->whereDate('till_valid', '>=', Carbon::now())
+                    ->orWhereNull('till_valid');
+            })->get();
+
+        // $banners = Banner::active()->InRandomOrder()->limit(5)->get();
+
+        return view('welcome', compact('products', 'coupons', ));
     }
 
 
