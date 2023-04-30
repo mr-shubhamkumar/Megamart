@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Dpanel\CategoryController;
 use App\Http\Controllers\Dpanel\CouponController;
+use App\Http\Controllers\Dpanel\OrderController;
 use App\Http\Controllers\Dpanel\ProductController;
 use App\Http\Controllers\Dpanel\BrandController;
 use App\Http\Controllers\Dpanel\ColorController;
@@ -21,4 +22,6 @@ Route::namespace('App\Http\Controllers\Dpanel')->group(function () {
     Route::resource('size', SizeController::class)->only('index','store','update');
     Route::resource('coupon', CouponController::class)->only('index','store','update');
 
+    Route::get('order/status/{id}/{status}', [\App\Http\Controllers\Dpanel\OrderController::class, 'updateStatus']);
+    Route::resource('order', OrderController::class)->only('index', 'show');
 });

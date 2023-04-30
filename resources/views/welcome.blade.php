@@ -9,7 +9,7 @@
         {{-- owslider script --}}
         <script>
             $(document).ready(function() {
-                $(".owl-carousel").owlCarousel({
+                $(".banner-carousel").owlCarousel({
                     loop: true,
                     margin: 10,
                     nav: false,
@@ -29,10 +29,33 @@
                     }
                 });
             });
+            $(document).ready(function() {
+                $(".coupon-carousel").owlCarousel({
+                    loop: {{ $coupons->count() <= 7 ? 0 : 1 }},
+                    margin: 10,
+                    nav: false,
+                    dots: false,
+                    autoplay: true,
+                    autoplayTimeout: 2000,
+                    autoplayHoverPause: true,
+                    responsiveClass: false,
+                    responsive: {
+                        0: {
+                            items: 1,
+                        },
+                        600: {
+                            items: 1,
+                        },
+                        1000: {
+                            items: 7,
+                        }
+                    }
+                });
+            });
         </script>
     @endpush
     <!-- Hero Swiper -->
-    <div class="owl-carousel">
+    <div class="banner-carousel owl-carousel">
         <a href="#">
             <div><img src="{{ asset('images/banner.png') }}" alt="banner"></div>
         </a>
@@ -59,16 +82,22 @@
 
     {{-- Coupon Code --}}
     <section class="px-6 md:px-28 mt-10 mb-6">
-        <div class=" flex flex-wrap gap-6 items-center gap-3">
-            @foreach (range(1, 7) as $item)
-                <div class="bg-white rounded-md shadow flex justify-between items-center">
-                    <div class="flex flex-col pl-2 py-1">
-                        <span class="text-gray-400">First Order</span>
-                        <strong class="text-orange-500">#FKFISDFS</strong>
+        <div class="coupon-carousel owl-carousel flex flex-wrap gap-6">
+            @foreach ($coupons as $item)
+                <div class="bg-white rounded-md shadow mb-2 flex justify-between items-center gap-3">
+
+                    <div class="flex flex-col pl-3 py-1">
+                        <span class="text-gray-400 leading-5">New Coupon</span>
+                        <strong class="text-orange-500">#{{ $item->code }}</strong>
                     </div>
 
                     <div class="bg-violet-600 w-12 font-medium text-white p-3 rounded-r-md">
-                        20% off
+                        @if ($item->type == 'Percentage')
+                            {{ $item->value }}% Off
+                        @else
+                            ₹{{ $item->value }} Off
+                        @endif
+
                     </div>
                 </div>
             @endforeach

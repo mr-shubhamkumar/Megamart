@@ -1,6 +1,6 @@
- @extends('layouts.app')
+@extends('layouts.app')
 
-@section('body_content')
+@section('boby_content')
     <div class="px-6 md:min-h-screen md:px-20 mt-6 grid grid-cols-1 md:grid-cols-6 gap-4">
         <div>
             <ul class="flex md:flex-col flex-wrap  justify-between gap-3 md:gap-1" id="tabLinks">
@@ -25,7 +25,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                         <div class="flex gap-1 border border-slate-300 rounded">
-                            <span class="flex-[2] bg-slate-400 px-2 text-white font-medium rounded-l">Order ID</span>
+                            <span class="flex-[2] bg-slate-400 text-white font-medium rounded-l">Order ID</span>
                             <p class="flex-[3]">{{ str_pad($order->id, 8, '0', STR_PAD_LEFT) }}</p>
                         </div>
 
@@ -59,8 +59,8 @@
                             <div class="flex gap-4">
                                 <div class="bg-gray-100 rounded shadow p-2">
                                     <img class="w-20"
-                                        src="{{ asset('storage/' . $item->variant->product->oldestImage->path) }}"
-                                        alt="">
+                                         src="{{ asset('storage/' . $item->variant->product->oldestImage->path) }}"
+                                         alt="">
                                 </div>
                                 <div class="flex flex-col gap-0.5">
                                     <h3 class="text-lg font-medium text-gray-800">{{ $item->variant->product->title }}</h3>
@@ -68,7 +68,7 @@
                                         <p class="flex items-center gap-1">
                                             Color:
                                             <span style="background-color: {{ $item->variant->color->code }}"
-                                                class="w-4 h-4 rounded-full">&nbsp;</span>
+                                                  class="w-4 h-4 rounded-full">&nbsp;</span>
                                         </p>
                                         <p>Size: {{ $item->variant->size->code }}</p>
                                     </div>
