@@ -60,7 +60,7 @@ class AccountController extends Controller
         }
 
         return view('account', compact('orders', 'addresses'));
-        
+
     }
 
 
@@ -159,4 +159,25 @@ class AccountController extends Controller
 
     //Address End ==========================================================================
 
+    // Order start ==========================================================================
+    public function showOrder($id)
+    {
+        $order = [];
+
+        if (auth()->check()) {
+            $order = Order::with([
+                'items.variant.color:id,code',
+                'items.variant.size:id,code',
+                'items.variant.product:id,title',
+                'items.variant.product.oldestImage',
+            ])
+                ->where('user_id', auth()->user()->id)
+                ->where('id', $id)
+                ->first();
+        }
+//        return $order;
+
+        return view('show_order', compact('order'));
+    }
+    //Order End ==========================================================================
 }

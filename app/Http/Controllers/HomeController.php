@@ -128,6 +128,11 @@ class HomeController extends Controller
 
         $products = $query->paginate(16);
 
+        if (auth()->check()) {
+            $user = User::find(auth()->user()->id);
+            $products = $user->attachFavoriteStatus($products);
+        }
+
         #Get colors than the product is available in
         $colors = Color::whereIn(
             'id',

@@ -89,15 +89,37 @@ html {
     }
 }
 
-.dropdown {
-  opacity: 0;
-  height: 0px;
-  visibility: hidden;
-  transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out;
-  transition-delay: opacity 0.3s;
+dropdown {
+    opacity: 0;
+    height: 0px;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out;
+    transition-delay: opacity 0.3s;
 }
 
 .dropdown.show {
-  opacity: 1;
-  visibility: visible;
+    opacity: 1;
+    visibility: visible;
 }
+
+.pending {
+    color: #ffe600;
+}
+
+.paid_out {
+    color: #0cd147;
+}
+
+.dispatched {
+    color: #ff4d07;
+}
+
+.on_way {
+    color: #2aabdf;
+}
+
+.delivered {
+    color: #9900ff;
+}
+
+

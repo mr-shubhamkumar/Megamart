@@ -16,4 +16,8 @@ class OrderItem extends Model
         'mrp',
         'price',
     ];
+    public function variant()
+    {
+        return $this->belongsTo(Variant::class);
+    }
 }
