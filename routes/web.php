@@ -56,4 +56,11 @@ Route::controller(WishlistController::class)->group(function () {
     Route::post('/wishlist/{id}', 'toggle');
 });
 
+Route::get('/install',function (){
+   \Illuminate\Support\Facades\Artisan::call('key:generate');
+   \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+   \Illuminate\Support\Facades\Artisan::call('storage:link');
+   return 'success';
+});
+
 
